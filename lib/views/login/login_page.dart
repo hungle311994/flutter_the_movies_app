@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
     final _keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () => unFocusScope(context),
       child: Scaffold(
         backgroundColor: color(AppColor.background),
         resizeToAvoidBottomInset: false,

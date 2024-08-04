@@ -8,6 +8,11 @@ import 'package:the_movie_app/views/register/register_page.dart';
 import 'package:the_movie_app/views/route_page.dart';
 import 'package:the_movie_app/views/settings/settings_page.dart';
 
+const String emailRegex =
+    r"^([-!#-'*+/-9=?A-Z^-~]+(\.([-!#-'*+/-9=?A-Z^-~]+|'([!#-\[\]-~]|\\[\x00-~])+'))*|'([!#-\[\]-~]|\\[\x00-~])+')@([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*)$";
+
+void unFocusScope(BuildContext context) => FocusScope.of(context).unfocus();
+
 Widget appTitle() {
   return Row(
     children: [

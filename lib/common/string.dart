@@ -10,10 +10,16 @@ const String errorMessageSomethingHappened = 'An error has occurred!';
 const String errorMessageFirstnameBlank = 'Firstname cannot be blank';
 const String errorMessageLastnameBlank = 'Lastname cannot be blank';
 const String errorMessageEmailBlank = 'Email cannot be blank';
+const String errorMessageEmailInvalid = 'Invalid email';
 const String errorMessageBlankPassword = 'Password cannot be blank';
 const String errorMessageBlankCfmPassword = 'Confirm password cannot be blank';
+const String errorMessagePasswordDoesNotMatch =
+    'Password and Confirm password does not match';
 const String errorMessageAgreeTheTerm =
     'Please agree to our Conditions of Use and Privacy Notice';
+
+// TITLE
+const String resetPassword = 'Reset password';
 
 // BUTTON NAMES
 const String loginBtn = 'Login';
@@ -21,6 +27,7 @@ const String logoutBtn = 'Logout';
 const String cancelBtn = 'Cancel';
 const String registerBtn = 'Register';
 const String forgotPasswordBtn = 'Forgot your Password?';
+const String sendInstructionBtn = 'Send Instruction';
 
 // HINT TEXT
 const String email = 'Email';
