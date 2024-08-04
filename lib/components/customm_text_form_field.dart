@@ -8,6 +8,7 @@ class CustomTextFormField extends StatefulWidget {
   CustomTextFormField({
     Key? key,
     required this.controller,
+    this.passwordController,
     required this.hintText,
     required this.icon,
     required this.onChanged,
@@ -15,6 +16,7 @@ class CustomTextFormField extends StatefulWidget {
   }) : super(key: key);
 
   final TextEditingController controller;
+  TextEditingController? passwordController;
   final String hintText;
   final IconData icon;
   final void Function(String) onChanged;
@@ -95,16 +97,39 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   String? _validateType({String? value}) {
     final _value = value == null || value.isEmpty;
 
-    if (_value && _hinText == firstName) {
-      return errorMessageFirstnameBlank;
-    } else if (_value && _hinText == lastName) {
-      return errorMessageLastnameBlank;
-    } else if (_value && _hinText == email) {
-      return errorMessageEmailBlank;
-    } else if (_value && _hinText == password) {
-      return errorMessageBlankPassword;
-    } else if (_value && _hinText == cfmPassword) {
-      return errorMessageBlankCfmPassword;
+    if (_value) {
+      if (_hinText == firstName) {
+        return errorMessageFirstnameBlank;
+      }
+
+      if (_hinText == lastName) {
+        return errorMessageLastnameBlank;
+      }
+
+      if (_hinText == password) {
+        return errorMessageBlankPassword;
+      }
+    }
+
+    if (_hinText == cfmPassword) {
+      if (_value) {
+        return errorMessageBlankCfmPassword;
+      } else if (widget.passwordController != null &&
+          value != widget.passwordController!.text) {
+        return errorMessagePasswordDoesNotMatch;
+      }
+    }
+
+    if (_hinText == email) {
+      if (value != null &&
+          value.isNotEmpty &&
+          !RegExp(emailRegex).hasMatch(value)) {
+        return errorMessageEmailInvalid;
+      }
+
+      if (_value) {
+        return errorMessageEmailBlank;
+      }
     }
 
     return null;

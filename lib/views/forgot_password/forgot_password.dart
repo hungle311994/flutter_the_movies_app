@@ -22,15 +22,17 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () => unFocusScope(context),
       child: Scaffold(
         backgroundColor: color(AppColor.background),
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: NestedScrollView(
             controller: _controller,
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
+            headerSliverBuilder: (
+              BuildContext context,
+              bool innerBoxIsScrolled,
+            ) {
               return <Widget>[
                 PreferredSize(
                   preferredSize: const Size.fromHeight(48),
@@ -40,15 +42,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     automaticallyImplyLeading: false,
                     titleSpacing: 0,
                     title: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          arrowBackIcon(
-                            context: context,
-                            platform: defaultTargetPlatform,
-                          ),
-                        ],
+                      padding: padding2,
+                      child: arrowBackIcon(
+                        context: context,
+                        platform: defaultTargetPlatform,
                       ),
                     ),
                   ),
@@ -65,7 +62,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         whiteTxt(
-                          text: 'Reset password',
+                          text: resetPassword,
                           size: 30,
                           weight: FontWeight.bold,
                         ),
@@ -113,7 +110,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           }
         },
         child: whiteTxt(
-          text: 'Send Instruction',
+          text: sendInstructionBtn,
           size: 16,
           weight: FontWeight.bold,
         ),

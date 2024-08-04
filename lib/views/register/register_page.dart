@@ -33,7 +33,7 @@ class _RegisterLoginPageState extends State<RegisterLoginPage> {
     final _height = MediaQuery.of(context).size.height;
 
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () => unFocusScope(context),
       child: Scaffold(
         backgroundColor: color(AppColor.background),
         body: SafeArea(
@@ -105,6 +105,7 @@ class _RegisterLoginPageState extends State<RegisterLoginPage> {
                               hintText: cfmPassword,
                               icon: Icons.lock_outline,
                               isPasswordField: true,
+                              passwordController: _passwordCont,
                               onChanged: (value) {
                                 print(value);
                               },
