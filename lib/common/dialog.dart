@@ -119,7 +119,7 @@ SimpleDialog logoutConfirmDlg(BuildContext context) {
                       final _msg = _response['message'] as String?;
 
                       if (_result == true) {
-                        await _pref.setIsLogin(false);
+                        await _pref.setIsLoggedIn(false);
                         await navToLoginPage(context: context);
                       } else {
                         await showBottomToastError(msg: _msg ?? '');
