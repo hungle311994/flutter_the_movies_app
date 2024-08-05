@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:the_movie_app/common/app_sizing.dart';
 import 'package:the_movie_app/common/color.dart';
 import 'package:the_movie_app/common/media_type.dart';
 import 'package:the_movie_app/common/text.dart';
@@ -41,6 +42,21 @@ Widget arrowBackIcon({
     child: platform == TargetPlatform.android
         ? const Icon(Icons.arrow_back, size: 30, color: Colors.white)
         : const Icon(Icons.arrow_back_ios_new, size: 30, color: Colors.white),
+  );
+}
+
+Widget spinnerLoadmore({
+  required bool isLoading,
+}) {
+  return SizedBox(
+    height: isLoading ? height[2] : height[0],
+    child: Center(
+      child: CircularProgressIndicator(
+        strokeWidth: 2,
+        color: color(AppColor.darkGrey),
+        backgroundColor: color(AppColor.outlineBorderGrey),
+      ),
+    ),
   );
 }
 

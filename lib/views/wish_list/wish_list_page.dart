@@ -86,16 +86,7 @@ class _WishListPageState extends State<WishListPage> {
               ],
             ),
           ),
-          SizedBox(
-            height: _isLoading ? height[2] : height[0],
-            child: Center(
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                color: color(AppColor.darkGrey),
-                backgroundColor: color(AppColor.outlineBorderGrey),
-              ),
-            ),
-          ),
+          spinnerLoadmore(isLoading: _isLoading),
         ],
       ),
     );

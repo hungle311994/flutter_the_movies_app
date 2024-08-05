@@ -23,7 +23,7 @@ class SharedPref {
     }
   }
 
-  Future<bool> getIsLogin() async {
+  Future<bool> getIsLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
     final value = prefs.getBool('is_login');
     return value ?? false;
@@ -48,7 +48,7 @@ class SharedPref {
     }
   }
 
-  Future<void> setIsLogin(bool value) async {
+  Future<void> setIsLoggedIn(bool value) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('is_login', value);
   }

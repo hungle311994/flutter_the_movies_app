@@ -30,68 +30,71 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordCont = TextEditingController();
+  bool _willRender = false;
 
   @override
   Widget build(BuildContext context) {
     final _keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
 
-    return GestureDetector(
-      onTap: () => unFocusScope(context),
-      child: Scaffold(
-        backgroundColor: color(AppColor.background),
-        resizeToAvoidBottomInset: false,
-        body: SafeArea(
-          child: Column(
-            children: [
-              const Expanded(flex: 1, child: SizedBox.shrink()),
-              Padding(
-                padding: EdgeInsets.only(bottom: _keyboardSpace),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      brightGreyTxt(
-                        text: 'Hey there, ',
-                        size: 18,
-                        weight: FontWeight.bold,
+    return _willRender
+        ? GestureDetector(
+            onTap: () => unFocusScope(context),
+            child: Scaffold(
+              backgroundColor: color(AppColor.background),
+              resizeToAvoidBottomInset: false,
+              body: SafeArea(
+                child: Column(
+                  children: [
+                    const Expanded(flex: 1, child: SizedBox.shrink()),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: _keyboardSpace),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            brightGreyTxt(
+                              text: 'Hey there, ',
+                              size: 18,
+                              weight: FontWeight.bold,
+                            ),
+                            hSpace(10),
+                            whiteTxt(
+                              text: 'Welcome back',
+                              size: 30,
+                              weight: FontWeight.bold,
+                            ),
+                            hSpace(30),
+                            CustomTextFormField(
+                              controller: _emailController,
+                              hintText: email,
+                              icon: Icons.mail_outline,
+                              onChanged: (value) {},
+                            ),
+                            hSpace(20),
+                            CustomTextFormField(
+                              controller: _passwordCont,
+                              hintText: password,
+                              icon: Icons.lock_outline,
+                              isPasswordField: true,
+                              onChanged: (value) {},
+                            ),
+                            hSpace(30),
+                            _forgotPasswordBtn(),
+                            hSpace(40),
+                            _loginBtn(),
+                            hSpace(20),
+                            _navToRegisterBtn(),
+                          ],
+                        ),
                       ),
-                      hSpace(10),
-                      whiteTxt(
-                        text: 'Welcome back',
-                        size: 30,
-                        weight: FontWeight.bold,
-                      ),
-                      hSpace(30),
-                      CustomTextFormField(
-                        controller: _emailController,
-                        hintText: email,
-                        icon: Icons.mail_outline,
-                        onChanged: (value) {},
-                      ),
-                      hSpace(20),
-                      CustomTextFormField(
-                        controller: _passwordCont,
-                        hintText: password,
-                        icon: Icons.lock_outline,
-                        isPasswordField: true,
-                        onChanged: (value) {},
-                      ),
-                      hSpace(30),
-                      _forgotPasswordBtn(),
-                      hSpace(40),
-                      _loginBtn(),
-                      hSpace(20),
-                      _navToRegisterBtn(),
-                    ],
-                  ),
+                    ),
+                    const Expanded(flex: 1, child: SizedBox.shrink()),
+                  ],
                 ),
               ),
-              const Expanded(flex: 1, child: SizedBox.shrink()),
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          )
+        : Scaffold(backgroundColor: color(AppColor.background));
   }
 
   Widget _forgotPasswordBtn() {
@@ -172,7 +175,7 @@ class _LoginPageState extends State<LoginPage> {
         final _msg = _response['message'] as String?;
 
         if (_result == true) {
-          await _pref.setIsLogin(true);
+          await _pref.setIsLoggedIn(true);
           await showBottomToastSuccess(msg: messageLoginSuccess);
           await navToRoutePage(context: context);
         } else {
@@ -187,9 +190,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _initialize() async {
-    final _isLogin = await _pref.getIsLogin();
+    final _isLoggedIn = await _pref.getIsLoggedIn();
 
-    if (_isLogin == true) {
+    setState(() {
+      _willRender = !_isLoggedIn;
+    });
+
+    if (_isLoggedIn == true) {
       await navToRoutePage(context: context);
     }
   }
@@ -197,7 +204,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    _initialize();
+    Future(() async {
+      await _initialize();
+    });
   }
 
   @override
