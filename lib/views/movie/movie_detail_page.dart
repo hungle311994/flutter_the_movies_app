@@ -18,6 +18,7 @@ import 'package:the_movie_app/components/genre_tags.dart';
 import 'package:the_movie_app/components/image_item.dart';
 import 'package:the_movie_app/components/rows/movie_row.dart';
 import 'package:the_movie_app/components/video_player.dart';
+import 'package:the_movie_app/components/vote_count/vote_count.dart';
 import 'package:the_movie_app/models/movie/movie.dart';
 import 'package:the_movie_app/models/video/video.dart';
 import 'package:the_movie_app/providers/cast_provider.dart';
@@ -109,7 +110,11 @@ class _MovieDetailPageState extends State<MovieDetailPage>
                 padding: paddingHorizontal2,
                 child: Column(
                   children: [
-                    _voteCount(_movie),
+                    VoteCount(
+                      animation: _animation,
+                      popularity: _movie?.popularity,
+                      voteCount: _movie?.voteCount,
+                    ),
                     hSpace(30),
                     _discription(_movie),
                     hSpace(30),
@@ -205,64 +210,6 @@ class _MovieDetailPageState extends State<MovieDetailPage>
           ),
         ],
       ),
-    );
-  }
-
-  Widget _voteCount(Movie? movie) {
-    return Row(
-      children: [
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            mainTxt(
-              text: roundedNumber(_animation.value * 10).toString(),
-              size: 14,
-            ),
-            CircularProgressIndicator(
-              color: color(AppColor.primary),
-              backgroundColor: color(AppColor.darkGrey),
-              value: _animation.value,
-            ),
-          ],
-        ),
-        wSpace(10),
-        Container(
-          width: 1,
-          height: 35,
-          decoration: BoxDecoration(
-            color: color(AppColor.noImageBackground),
-          ),
-        ),
-        wSpace(10),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                whiteTxt(
-                  text: (movie?.popularity ?? 0).round().toString(),
-                  size: 14,
-                ),
-                wSpace(5),
-                brightGreyTxt(text: 'ratings'),
-              ],
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                whiteTxt(
-                  text: (movie?.voteCount ?? 0).round().toString(),
-                  size: 14,
-                ),
-                wSpace(5),
-                brightGreyTxt(text: 'reviews'),
-              ],
-            ),
-          ],
-        ),
-      ],
     );
   }
 
